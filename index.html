@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+  <div>Hello World</div>
+  <div id="result"></div>
+
+  <script>
+    var source = new EventSource('http://localhost:4000/stream/hanoi');
+
+    source.onmessage = function (event) {
+      document.getElementById('result').innerHTML += event.data + '<br>';
+    };
+
+    source.onopen = function (event) {
+      console.log("Connection to server opened.");
+    }
+
+    source.onerror = function (error) {
+      console.error("EventSource failed:", error);
+    };
+  </script>
+</body>
+
+</html>

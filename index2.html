@@ -1,0 +1,30 @@
+ <!DOCTYPE html>
+    <html>
+    <head>
+        <title>Fastify SSE v2 Example</title>
+    </head>
+    <body>
+        <h1>Fastify SSE v2 Example</h1>
+        <ul id="events"></ul>
+
+        <script>
+            // Create an EventSource instance that connects to our SSE route
+            const source = new EventSource('http://localhost:3000/stream');
+
+            // Get the element where we'll display our events
+            const eventsElement = document.getElementById('events');
+
+            // When an event is received, add it to the DOM
+            source.onmessage = event => {
+                const li = document.createElement('li');
+                li.textContent = JSON.parse(event.data).data;
+                eventsElement.appendChild(li);
+            };
+
+            // Handle any errors that occur.
+            source.onerror = error => {
+                console.error('EventSource failed:', error);
+            };
+        </script>
+    </body>
+    </html>
